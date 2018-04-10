@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qudian.pay.ares.dao.mapper.local.BankFileUploadMapper" >
+  <resultMap id="BaseResultMap" type="com.qudian.pay.ares.dao.entity.local.BankFileUpload" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ins_name" property="insName" jdbcType="VARCHAR" />
+    <result column="loandetail" property="loandetail" jdbcType="VARCHAR" />
+    <result column="payplan" property="payplan" jdbcType="VARCHAR" />
+    <result column="paylog" property="paylog" jdbcType="VARCHAR" />
+    <result column="indemnity" property="indemnity" jdbcType="VARCHAR" />
+    <result column="overdue" property="overdue" jdbcType="VARCHAR" />
+    <result column="upload_time" property="uploadTime" jdbcType="DATE" />
+    <result column="opt_name" property="optName" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ins_name, loandetail, payplan, paylog, indemnity, overdue, upload_time, opt_name,
+    create_time, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUploadExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bank_file_upload
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from bank_file_upload
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bank_file_upload
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUploadExample" >
+    delete from bank_file_upload
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUpload" >
+    insert into bank_file_upload (id, ins_name, loandetail,
+    payplan, paylog, indemnity,
+    overdue, upload_time, opt_name,
+    create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{insName,jdbcType=VARCHAR}, #{loandetail,jdbcType=VARCHAR},
+    #{payplan,jdbcType=VARCHAR}, #{paylog,jdbcType=VARCHAR}, #{indemnity,jdbcType=VARCHAR},
+    #{overdue,jdbcType=VARCHAR}, #{uploadTime,jdbcType=DATE}, #{optName,jdbcType=VARCHAR},
+    #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUpload" >
+    insert into bank_file_upload
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="insName != null" >
+        ins_name,
+      </if>
+      <if test="loandetail != null" >
+        loandetail,
+      </if>
+      <if test="payplan != null" >
+        payplan,
+      </if>
+      <if test="paylog != null" >
+        paylog,
+      </if>
+      <if test="indemnity != null" >
+        indemnity,
+      </if>
+      <if test="overdue != null" >
+        overdue,
+      </if>
+      <if test="uploadTime != null" >
+        upload_time,
+      </if>
+      <if test="optName != null" >
+        opt_name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="insName != null" >
+        #{insName,jdbcType=VARCHAR},
+      </if>
+      <if test="loandetail != null" >
+        #{loandetail,jdbcType=VARCHAR},
+      </if>
+      <if test="payplan != null" >
+        #{payplan,jdbcType=VARCHAR},
+      </if>
+      <if test="paylog != null" >
+        #{paylog,jdbcType=VARCHAR},
+      </if>
+      <if test="indemnity != null" >
+        #{indemnity,jdbcType=VARCHAR},
+      </if>
+      <if test="overdue != null" >
+        #{overdue,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null" >
+        #{uploadTime,jdbcType=DATE},
+      </if>
+      <if test="optName != null" >
+        #{optName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUploadExample" resultType="java.lang.Integer" >
+    select count(*) from bank_file_upload
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" resultType="com.qudian.pay.ares.dao.entity.local.BankFileUpload">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List"/>
+    from bank_file_upload
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startLimit != null">
+      limit ${startLimit},${pageSize}
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update bank_file_upload
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.insName != null" >
+        ins_name = #{record.insName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loandetail != null" >
+        loandetail = #{record.loandetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payplan != null" >
+        payplan = #{record.payplan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paylog != null" >
+        paylog = #{record.paylog,jdbcType=VARCHAR},
+      </if>
+      <if test="record.indemnity != null" >
+        indemnity = #{record.indemnity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.overdue != null" >
+        overdue = #{record.overdue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadTime != null" >
+        upload_time = #{record.uploadTime,jdbcType=DATE},
+      </if>
+      <if test="record.optName != null" >
+        opt_name = #{record.optName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update bank_file_upload
+    set id = #{record.id,jdbcType=INTEGER},
+    ins_name = #{record.insName,jdbcType=VARCHAR},
+    loandetail = #{record.loandetail,jdbcType=VARCHAR},
+    payplan = #{record.payplan,jdbcType=VARCHAR},
+    paylog = #{record.paylog,jdbcType=VARCHAR},
+    indemnity = #{record.indemnity,jdbcType=VARCHAR},
+    overdue = #{record.overdue,jdbcType=VARCHAR},
+    upload_time = #{record.uploadTime,jdbcType=DATE},
+    opt_name = #{record.optName,jdbcType=VARCHAR},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUpload" >
+    update bank_file_upload
+    <set >
+      <if test="insName != null" >
+        ins_name = #{insName,jdbcType=VARCHAR},
+      </if>
+      <if test="loandetail != null" >
+        loandetail = #{loandetail,jdbcType=VARCHAR},
+      </if>
+      <if test="payplan != null" >
+        payplan = #{payplan,jdbcType=VARCHAR},
+      </if>
+      <if test="paylog != null" >
+        paylog = #{paylog,jdbcType=VARCHAR},
+      </if>
+      <if test="indemnity != null" >
+        indemnity = #{indemnity,jdbcType=VARCHAR},
+      </if>
+      <if test="overdue != null" >
+        overdue = #{overdue,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null" >
+        upload_time = #{uploadTime,jdbcType=DATE},
+      </if>
+      <if test="optName != null" >
+        opt_name = #{optName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qudian.pay.ares.dao.entity.local.BankFileUpload" >
+    update bank_file_upload
+    set ins_name = #{insName,jdbcType=VARCHAR},
+    loandetail = #{loandetail,jdbcType=VARCHAR},
+    payplan = #{payplan,jdbcType=VARCHAR},
+    paylog = #{paylog,jdbcType=VARCHAR},
+    indemnity = #{indemnity,jdbcType=VARCHAR},
+    overdue = #{overdue,jdbcType=VARCHAR},
+    upload_time = #{uploadTime,jdbcType=DATE},
+    opt_name = #{optName,jdbcType=VARCHAR},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

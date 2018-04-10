@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qudian.pay.ares.dao.mapper.local.ChannelMapper" >
+  <resultMap id="BaseResultMap" type="com.qudian.pay.ares.dao.entity.local.Channel" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="loan_company" property="loanCompany" jdbcType="INTEGER" />
+    <result column="business_company" property="businessCompany" jdbcType="INTEGER" />
+    <result column="channel_name" property="channelName" jdbcType="VARCHAR" />
+    <result column="channel_status" property="channelStatus" jdbcType="TINYINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="ext_1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext_2" property="ext2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, loan_company, business_company, channel_name, channel_status, create_time, update_time,
+    ext_1, ext_2
+  </sql>
+  <select id="selectByExampleByPage" resultMap="BaseResultMap" parameterType="com.qudian.pay.ares.dao.entity.local.ChannelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from channels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startLimit != null">
+      limit ${startLimit},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from channels
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from channels
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qudian.pay.ares.dao.entity.local.ChannelExample" >
+    delete from channels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qudian.pay.ares.dao.entity.local.Channel" >
+    insert into channels (id, loan_company, business_company,
+    channel_name, channel_status, create_time,
+    update_time, ext_1, ext_2
+    )
+    values (#{id,jdbcType=BIGINT}, #{loanCompany,jdbcType=INTEGER}, #{businessCompany,jdbcType=INTEGER},
+    #{channelName,jdbcType=VARCHAR}, #{channelStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qudian.pay.ares.dao.entity.local.Channel" >
+    insert into channels
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanCompany != null" >
+        loan_company,
+      </if>
+      <if test="businessCompany != null" >
+        business_company,
+      </if>
+      <if test="channelName != null" >
+        channel_name,
+      </if>
+      <if test="channelStatus != null" >
+        channel_status,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="ext1 != null" >
+        ext_1,
+      </if>
+      <if test="ext2 != null" >
+        ext_2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanCompany != null" >
+        #{loanCompany,jdbcType=INTEGER},
+      </if>
+      <if test="businessCompany != null" >
+        #{businessCompany,jdbcType=INTEGER},
+      </if>
+      <if test="channelName != null" >
+        #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelStatus != null" >
+        #{channelStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qudian.pay.ares.dao.entity.local.ChannelExample" resultType="java.lang.Integer" >
+    select count(*) from channels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update channels
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.loanCompany != null" >
+        loan_company = #{record.loanCompany,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessCompany != null" >
+        business_company = #{record.businessCompany,jdbcType=INTEGER},
+      </if>
+      <if test="record.channelName != null" >
+        channel_name = #{record.channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channelStatus != null" >
+        channel_status = #{record.channelStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ext1 != null" >
+        ext_1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext_2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update channels
+    set id = #{record.id,jdbcType=BIGINT},
+    loan_company = #{record.loanCompany,jdbcType=INTEGER},
+    business_company = #{record.businessCompany,jdbcType=INTEGER},
+    channel_name = #{record.channelName,jdbcType=VARCHAR},
+    channel_status = #{record.channelStatus,jdbcType=TINYINT},
+    create_time = #{record.createTime,jdbcType=TIMESTAMP},
+    update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+    ext_1 = #{record.ext1,jdbcType=VARCHAR},
+    ext_2 = #{record.ext2,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qudian.pay.ares.dao.entity.local.Channel" >
+    update channels
+    <set >
+      <if test="loanCompany != null" >
+        loan_company = #{loanCompany,jdbcType=INTEGER},
+      </if>
+      <if test="businessCompany != null" >
+        business_company = #{businessCompany,jdbcType=INTEGER},
+      </if>
+      <if test="channelName != null" >
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelStatus != null" >
+        channel_status = #{channelStatus,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ext1 != null" >
+        ext_1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext_2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qudian.pay.ares.dao.entity.local.Channel" >
+    update channels
+    set loan_company = #{loanCompany,jdbcType=INTEGER},
+    business_company = #{businessCompany,jdbcType=INTEGER},
+    channel_name = #{channelName,jdbcType=VARCHAR},
+    channel_status = #{channelStatus,jdbcType=TINYINT},
+    create_time = #{createTime,jdbcType=TIMESTAMP},
+    update_time = #{updateTime,jdbcType=TIMESTAMP},
+    ext_1 = #{ext1,jdbcType=VARCHAR},
+    ext_2 = #{ext2,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qudian.pay.ares.dao.entity.local.ChannelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from channels
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>
+

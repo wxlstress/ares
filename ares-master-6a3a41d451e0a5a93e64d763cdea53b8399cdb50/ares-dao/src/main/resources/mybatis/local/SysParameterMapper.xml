@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qudian.pay.ares.dao.mapper.local.SysParameterMapper">
+    <resultMap id="BaseResultMap" type="com.qudian.pay.ares.dao.entity.local.SysParameter">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="sys_parameter_code" property="sysParameterCode" jdbcType="CHAR"/>
+        <result column="sys_parameter_name" property="sysParameterName" jdbcType="VARCHAR"/>
+        <result column="sys_parameter_type" property="sysParameterType" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, sys_parameter_code, sys_parameter_name, sys_parameter_type, create_time, status
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.qudian.pay.ares.dao.entity.local.SysParameterExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from sys_parameter
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_parameter
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_parameter
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.qudian.pay.ares.dao.entity.local.SysParameterExample">
+        delete from sys_parameter
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.qudian.pay.ares.dao.entity.local.SysParameter">
+    insert into sys_parameter (id, sys_parameter_code, sys_parameter_name, 
+      sys_parameter_type, create_time, status
+      )
+    values (#{id,jdbcType=INTEGER}, #{sysParameterCode,jdbcType=CHAR}, #{sysParameterName,jdbcType=VARCHAR}, 
+      #{sysParameterType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.qudian.pay.ares.dao.entity.local.SysParameter">
+        insert into sys_parameter
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sysParameterCode != null">
+                sys_parameter_code,
+            </if>
+            <if test="sysParameterName != null">
+                sys_parameter_name,
+            </if>
+            <if test="sysParameterType != null">
+                sys_parameter_type,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="sysParameterCode != null">
+                #{sysParameterCode,jdbcType=CHAR},
+            </if>
+            <if test="sysParameterName != null">
+                #{sysParameterName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysParameterType != null">
+                #{sysParameterType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.qudian.pay.ares.dao.entity.local.SysParameterExample"
+            resultType="java.lang.Integer">
+        select count(*) from sys_parameter
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update sys_parameter
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.sysParameterCode != null">
+                sys_parameter_code = #{record.sysParameterCode,jdbcType=CHAR},
+            </if>
+            <if test="record.sysParameterName != null">
+                sys_parameter_name = #{record.sysParameterName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.sysParameterType != null">
+                sys_parameter_type = #{record.sysParameterType,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=CHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update sys_parameter
+        set id = #{record.id,jdbcType=INTEGER},
+        sys_parameter_code = #{record.sysParameterCode,jdbcType=CHAR},
+        sys_parameter_name = #{record.sysParameterName,jdbcType=VARCHAR},
+        sys_parameter_type = #{record.sysParameterType,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=CHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.qudian.pay.ares.dao.entity.local.SysParameter">
+        update sys_parameter
+        <set>
+            <if test="sysParameterCode != null">
+                sys_parameter_code = #{sysParameterCode,jdbcType=CHAR},
+            </if>
+            <if test="sysParameterName != null">
+                sys_parameter_name = #{sysParameterName,jdbcType=VARCHAR},
+            </if>
+            <if test="sysParameterType != null">
+                sys_parameter_type = #{sysParameterType,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.qudian.pay.ares.dao.entity.local.SysParameter">
+    update sys_parameter
+    set sys_parameter_code = #{sysParameterCode,jdbcType=CHAR},
+      sys_parameter_name = #{sysParameterName,jdbcType=VARCHAR},
+      sys_parameter_type = #{sysParameterType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=CHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+    <select id="selectParamByParamType" resultType="string">
+      select sys_parameter_name from sys_parameter where sys_parameter_type = #{type}
+    </select>
+
+
+    <select id="selectFtpInfo" resultType="java.util.Map" >
+        select sys_parameter_type ,sys_parameter_name  from sys_parameter
+    </select>
+</mapper>

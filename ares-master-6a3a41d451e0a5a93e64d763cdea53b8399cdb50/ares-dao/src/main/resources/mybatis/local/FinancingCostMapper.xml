@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qudian.pay.ares.dao.mapper.local.FinancingCostMapper">
+    <resultMap id="BaseResultMap" type="com.qudian.pay.ares.dao.entity.local.FinancingCost">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="channel_type" property="channelType" jdbcType="TINYINT"/>
+        <result column="channel_name" property="channelName" jdbcType="VARCHAR"/>
+        <result column="channel_id" property="channelId" jdbcType="INTEGER"/>
+        <result column="channel_classified" property="channelClassified" jdbcType="INTEGER"/>
+        <result column="repay_method" property="repayMethod" jdbcType="TINYINT"/>
+        <result column="repay_rate" property="repayRate" jdbcType="DECIMAL"/>
+        <result column="loan_day" property="loanDay" jdbcType="DATE"/>
+        <result column="repay_day" property="repayDay" jdbcType="DATE"/>
+        <result column="interest_type" property="interestType" jdbcType="TINYINT"/>
+        <result column="term" property="term" jdbcType="INTEGER"/>
+        <result column="term_number" property="termNumber" jdbcType="TINYINT"/>
+        <result column="loan_capital" property="loanCapital" jdbcType="DECIMAL"/>
+        <result column="yinghuan_lixi" property="yinghuanLixi" jdbcType="DECIMAL"/>
+        <result column="shengyu_capital" property="shengyuCapital" jdbcType="DECIMAL"/>
+        <result column="other_cost" property="otherCost" jdbcType="DECIMAL"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="opt_user" property="optUser" jdbcType="VARCHAR"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="ext_1" property="ext1" jdbcType="VARCHAR"/>
+        <result column="ext_2" property="ext2" jdbcType="VARCHAR"/>
+        <result column="ext_3" property="ext3" jdbcType="VARCHAR"/>
+        <result column="ext_4" property="ext4" jdbcType="VARCHAR"/>
+        <result column="ext_5" property="ext5" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, channel_type, channel_name, channel_id, channel_classified, repay_method, repay_rate, 
+    loan_day, repay_day, interest_type, term, term_number, loan_capital, yinghuan_lixi, 
+    shengyu_capital, other_cost, create_time, update_time, opt_user, remark, ext_1, ext_2, 
+    ext_3, ext_4, ext_5
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCostExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from financing_cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from financing_cost
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from financing_cost
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCostExample">
+        delete from financing_cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCost">
+    insert into financing_cost (id, channel_type, channel_name, 
+      channel_id, channel_classified, repay_method, 
+      repay_rate, loan_day, repay_day, 
+      interest_type, term, term_number, 
+      loan_capital, yinghuan_lixi, shengyu_capital, 
+      other_cost, create_time, update_time, 
+      opt_user, remark, ext_1, 
+      ext_2, ext_3, ext_4, ext_5
+      )
+    values (#{id,jdbcType=INTEGER}, #{channelType,jdbcType=TINYINT}, #{channelName,jdbcType=VARCHAR}, 
+      #{channelId,jdbcType=INTEGER}, #{channelClassified,jdbcType=INTEGER}, #{repayMethod,jdbcType=TINYINT},
+      #{repayRate,jdbcType=DECIMAL}, #{loanDay,jdbcType=DATE}, #{repayDay,jdbcType=DATE}, 
+      #{interestType,jdbcType=TINYINT}, #{term,jdbcType=INTEGER}, #{termNumber,jdbcType=TINYINT},
+      #{loanCapital,jdbcType=DECIMAL}, #{yinghuanLixi,jdbcType=DECIMAL}, #{shengyuCapital,jdbcType=DECIMAL}, 
+      #{otherCost,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{optUser,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{ext1,jdbcType=VARCHAR}, 
+      #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=VARCHAR}, #{ext5,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCost">
+        insert into financing_cost
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="channelType != null">
+                channel_type,
+            </if>
+            <if test="channelName != null">
+                channel_name,
+            </if>
+            <if test="channelId != null">
+                channel_id,
+            </if>
+            <if test="channelClassified != null">
+                channel_classified,
+            </if>
+            <if test="repayMethod != null">
+                repay_method,
+            </if>
+            <if test="repayRate != null">
+                repay_rate,
+            </if>
+            <if test="loanDay != null">
+                loan_day,
+            </if>
+            <if test="repayDay != null">
+                repay_day,
+            </if>
+            <if test="interestType != null">
+                interest_type,
+            </if>
+            <if test="term != null">
+                term,
+            </if>
+            <if test="termNumber != null">
+                term_number,
+            </if>
+            <if test="loanCapital != null">
+                loan_capital,
+            </if>
+            <if test="yinghuanLixi != null">
+                yinghuan_lixi,
+            </if>
+            <if test="shengyuCapital != null">
+                shengyu_capital,
+            </if>
+            <if test="otherCost != null">
+                other_cost,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+            <if test="optUser != null">
+                opt_user,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="ext1 != null">
+                ext_1,
+            </if>
+            <if test="ext2 != null">
+                ext_2,
+            </if>
+            <if test="ext3 != null">
+                ext_3,
+            </if>
+            <if test="ext4 != null">
+                ext_4,
+            </if>
+            <if test="ext5 != null">
+                ext_5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="channelType != null">
+                #{channelType,jdbcType=TINYINT},
+            </if>
+            <if test="channelName != null">
+                #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelClassified != null">
+                #{channelClassified,jdbcType=INTEGER},
+            </if>
+            <if test="repayMethod != null">
+                #{repayMethod,jdbcType=TINYINT},
+            </if>
+            <if test="repayRate != null">
+                #{repayRate,jdbcType=DECIMAL},
+            </if>
+            <if test="loanDay != null">
+                #{loanDay,jdbcType=DATE},
+            </if>
+            <if test="repayDay != null">
+                #{repayDay,jdbcType=DATE},
+            </if>
+            <if test="interestType != null">
+                #{interestType,jdbcType=TINYINT},
+            </if>
+            <if test="term != null">
+                #{term,jdbcType=INTEGER},
+            </if>
+            <if test="termNumber != null">
+                #{termNumber,jdbcType=TINYINT},
+            </if>
+            <if test="loanCapital != null">
+                #{loanCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="yinghuanLixi != null">
+                #{yinghuanLixi,jdbcType=DECIMAL},
+            </if>
+            <if test="shengyuCapital != null">
+                #{shengyuCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="otherCost != null">
+                #{otherCost,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optUser != null">
+                #{optUser,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                #{ext4,jdbcType=VARCHAR},
+            </if>
+            <if test="ext5 != null">
+                #{ext5,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCostExample"
+            resultType="java.lang.Integer">
+        select count(*) from financing_cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update financing_cost
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.channelType != null">
+                channel_type = #{record.channelType,jdbcType=TINYINT},
+            </if>
+            <if test="record.channelName != null">
+                channel_name = #{record.channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.channelId != null">
+                channel_id = #{record.channelId,jdbcType=INTEGER},
+            </if>
+            <if test="record.channelClassified != null">
+                channel_classified = #{record.channelClassified,jdbcType=INTEGER},
+            </if>
+            <if test="record.repayMethod != null">
+                repay_method = #{record.repayMethod,jdbcType=TINYINT},
+            </if>
+            <if test="record.repayRate != null">
+                repay_rate = #{record.repayRate,jdbcType=DECIMAL},
+            </if>
+            <if test="record.loanDay != null">
+                loan_day = #{record.loanDay,jdbcType=DATE},
+            </if>
+            <if test="record.repayDay != null">
+                repay_day = #{record.repayDay,jdbcType=DATE},
+            </if>
+            <if test="record.interestType != null">
+                interest_type = #{record.interestType,jdbcType=TINYINT},
+            </if>
+            <if test="record.term != null">
+                term = #{record.term,jdbcType=INTEGER},
+            </if>
+            <if test="record.termNumber != null">
+                term_number = #{record.termNumber,jdbcType=TINYINT},
+            </if>
+            <if test="record.loanCapital != null">
+                loan_capital = #{record.loanCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="record.yinghuanLixi != null">
+                yinghuan_lixi = #{record.yinghuanLixi,jdbcType=DECIMAL},
+            </if>
+            <if test="record.shengyuCapital != null">
+                shengyu_capital = #{record.shengyuCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="record.otherCost != null">
+                other_cost = #{record.otherCost,jdbcType=DECIMAL},
+            </if>
+            <if test="record.createTime != null">
+                create_time = #{record.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updateTime != null">
+                update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.optUser != null">
+                opt_user = #{record.optUser,jdbcType=VARCHAR},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ext1 != null">
+                ext_1 = #{record.ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ext2 != null">
+                ext_2 = #{record.ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ext3 != null">
+                ext_3 = #{record.ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ext4 != null">
+                ext_4 = #{record.ext4,jdbcType=VARCHAR},
+            </if>
+            <if test="record.ext5 != null">
+                ext_5 = #{record.ext5,jdbcType=VARCHAR},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update financing_cost
+        set id = #{record.id,jdbcType=INTEGER},
+        channel_type = #{record.channelType,jdbcType=TINYINT},
+        channel_name = #{record.channelName,jdbcType=VARCHAR},
+        channel_id = #{record.channelId,jdbcType=INTEGER},
+        channel_classified = #{record.channelClassified,jdbcType=INTEGER},
+        repay_method = #{record.repayMethod,jdbcType=TINYINT},
+        repay_rate = #{record.repayRate,jdbcType=DECIMAL},
+        loan_day = #{record.loanDay,jdbcType=DATE},
+        repay_day = #{record.repayDay,jdbcType=DATE},
+        interest_type = #{record.interestType,jdbcType=TINYINT},
+        term = #{record.term,jdbcType=INTEGER},
+        term_number = #{record.termNumber,jdbcType=TINYINT},
+        loan_capital = #{record.loanCapital,jdbcType=DECIMAL},
+        yinghuan_lixi = #{record.yinghuanLixi,jdbcType=DECIMAL},
+        shengyu_capital = #{record.shengyuCapital,jdbcType=DECIMAL},
+        other_cost = #{record.otherCost,jdbcType=DECIMAL},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+        opt_user = #{record.optUser,jdbcType=VARCHAR},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        ext_1 = #{record.ext1,jdbcType=VARCHAR},
+        ext_2 = #{record.ext2,jdbcType=VARCHAR},
+        ext_3 = #{record.ext3,jdbcType=VARCHAR},
+        ext_4 = #{record.ext4,jdbcType=VARCHAR},
+        ext_5 = #{record.ext5,jdbcType=VARCHAR}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCost">
+        update financing_cost
+        <set>
+            <if test="channelType != null">
+                channel_type = #{channelType,jdbcType=TINYINT},
+            </if>
+            <if test="channelName != null">
+                channel_name = #{channelName,jdbcType=VARCHAR},
+            </if>
+            <if test="channelId != null">
+                channel_id = #{channelId,jdbcType=INTEGER},
+            </if>
+            <if test="channelClassified != null">
+                channel_classified = #{channelClassified,jdbcType=INTEGER},
+            </if>
+            <if test="repayMethod != null">
+                repay_method = #{repayMethod,jdbcType=TINYINT},
+            </if>
+            <if test="repayRate != null">
+                repay_rate = #{repayRate,jdbcType=DECIMAL},
+            </if>
+            <if test="loanDay != null">
+                loan_day = #{loanDay,jdbcType=DATE},
+            </if>
+            <if test="repayDay != null">
+                repay_day = #{repayDay,jdbcType=DATE},
+            </if>
+            <if test="interestType != null">
+                interest_type = #{interestType,jdbcType=TINYINT},
+            </if>
+            <if test="term != null">
+                term = #{term,jdbcType=INTEGER},
+            </if>
+            <if test="termNumber != null">
+                term_number = #{termNumber,jdbcType=TINYINT},
+            </if>
+            <if test="loanCapital != null">
+                loan_capital = #{loanCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="yinghuanLixi != null">
+                yinghuan_lixi = #{yinghuanLixi,jdbcType=DECIMAL},
+            </if>
+            <if test="shengyuCapital != null">
+                shengyu_capital = #{shengyuCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="otherCost != null">
+                other_cost = #{otherCost,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="optUser != null">
+                opt_user = #{optUser,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="ext1 != null">
+                ext_1 = #{ext1,jdbcType=VARCHAR},
+            </if>
+            <if test="ext2 != null">
+                ext_2 = #{ext2,jdbcType=VARCHAR},
+            </if>
+            <if test="ext3 != null">
+                ext_3 = #{ext3,jdbcType=VARCHAR},
+            </if>
+            <if test="ext4 != null">
+                ext_4 = #{ext4,jdbcType=VARCHAR},
+            </if>
+            <if test="ext5 != null">
+                ext_5 = #{ext5,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCost">
+    update financing_cost
+    set channel_type = #{channelType,jdbcType=TINYINT},
+      channel_name = #{channelName,jdbcType=VARCHAR},
+      channel_id = #{channelId,jdbcType=INTEGER},
+      channel_classified = #{channelClassified,jdbcType=INTEGER},
+      repay_method = #{repayMethod,jdbcType=TINYINT},
+      repay_rate = #{repayRate,jdbcType=DECIMAL},
+      loan_day = #{loanDay,jdbcType=DATE},
+      repay_day = #{repayDay,jdbcType=DATE},
+      interest_type = #{interestType,jdbcType=TINYINT},
+      term = #{term,jdbcType=INTEGER},
+      term_number = #{termNumber,jdbcType=TINYINT},
+      loan_capital = #{loanCapital,jdbcType=DECIMAL},
+      yinghuan_lixi = #{yinghuanLixi,jdbcType=DECIMAL},
+      shengyu_capital = #{shengyuCapital,jdbcType=DECIMAL},
+      other_cost = #{otherCost,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      opt_user = #{optUser,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      ext_1 = #{ext1,jdbcType=VARCHAR},
+      ext_2 = #{ext2,jdbcType=VARCHAR},
+      ext_3 = #{ext3,jdbcType=VARCHAR},
+      ext_4 = #{ext4,jdbcType=VARCHAR},
+      ext_5 = #{ext5,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+    <select id="selectByExampleByPage" resultMap="BaseResultMap"
+            parameterType="com.qudian.pay.ares.dao.entity.local.FinancingCostExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from financing_cost
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+        <if test="startLimit != null">
+            limit ${startLimit},${pageSize}
+        </if>
+    </select>
+</mapper>

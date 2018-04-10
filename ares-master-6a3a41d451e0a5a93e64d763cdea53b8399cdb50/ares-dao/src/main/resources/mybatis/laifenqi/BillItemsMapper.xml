@@ -1,0 +1,646 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qudian.pay.ares.dao.mapper.laifenqi.BillItemsMapper">
+    <resultMap id="BaseResultMap" type="com.qudian.pay.ares.dao.entity.laifenqi.BillItems">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="bill_id" property="billId" jdbcType="INTEGER"/>
+        <result column="amount" property="amount" jdbcType="DECIMAL"/>
+        <result column="money" property="money" jdbcType="DECIMAL"/>
+        <result column="order_id" property="orderId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="pay_status" property="payStatus" jdbcType="TINYINT"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="deadline" property="deadline" jdbcType="DATE"/>
+        <result column="pay_time" property="payTime" jdbcType="TIMESTAMP"/>
+        <result column="order" property="order" jdbcType="TINYINT"/>
+        <result column="bill_type" property="billType" jdbcType="TINYINT"/>
+        <result column="overdue_fine" property="overdueFine" jdbcType="DECIMAL"/>
+        <result column="overdue" property="overdue" jdbcType="INTEGER"/>
+        <result column="paid" property="paid" jdbcType="DECIMAL"/>
+        <result column="discount" property="discount" jdbcType="DECIMAL"/>
+        <result column="capital" property="capital" jdbcType="DECIMAL"/>
+        <result column="interest" property="interest" jdbcType="DECIMAL"/>
+        <result column="base_capital" property="baseCapital" jdbcType="DECIMAL"/>
+        <result column="base_interest" property="baseInterest" jdbcType="DECIMAL"/>
+        <result column="sms" property="sms" jdbcType="TINYINT"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP"/>
+        <result column="cycle" property="cycle" jdbcType="TINYINT"/>
+        <result column="charge" property="charge" jdbcType="DECIMAL"/>
+        <result column="notify_time" property="notifyTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, bill_id, amount, money, order_id, user_id, pay_status, status, deadline, pay_time, 
+    `order`, bill_type, overdue_fine, overdue, paid, discount, capital, interest, base_capital,
+    base_interest, sms, remark, created_at, updated_at, deleted_at, cycle, charge, notify_time
+  </sql>
+
+    <sql id="Column_List">
+        b.id, b.bill_id, b.amount, b.money, b.order_id, b.user_id, b.pay_status, b.status, b.deadline, b.pay_time,
+        b.`order`, b.bill_type, b.overdue_fine, b.overdue, b.paid, b.discount, b.capital, b.interest, b.base_capital,
+        b.base_interest, b.sms, b.remark, b.created_at, b.updated_at, b.deleted_at, b.cycle, b.charge, b.notify_time
+    </sql>
+    <select id="selectByExample" resultMap="BaseResultMap"
+            parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItemsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from bill_items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from bill_items
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bill_items
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItemsExample">
+        delete from bill_items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+
+    </delete>
+    <insert id="insert" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItems">
+    insert into bill_items (id, bill_id, amount, 
+      money, order_id, user_id, 
+      pay_status, status, deadline, 
+      pay_time, `order`, bill_type,
+      overdue_fine, overdue, paid, 
+      discount, capital, interest, 
+      base_capital, base_interest, sms, 
+      remark, created_at, updated_at, 
+      deleted_at, cycle, charge, 
+      notify_time)
+    values (#{id,jdbcType=INTEGER}, #{billId,jdbcType=INTEGER}, #{amount,jdbcType=DECIMAL}, 
+      #{money,jdbcType=DECIMAL}, #{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
+      #{payStatus,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{deadline,jdbcType=DATE}, 
+      #{payTime,jdbcType=TIMESTAMP}, #{order,jdbcType=TINYINT}, #{billType,jdbcType=TINYINT},
+      #{overdueFine,jdbcType=DECIMAL}, #{overdue,jdbcType=INTEGER}, #{paid,jdbcType=DECIMAL}, 
+      #{discount,jdbcType=DECIMAL}, #{capital,jdbcType=DECIMAL}, #{interest,jdbcType=DECIMAL}, 
+      #{baseCapital,jdbcType=DECIMAL}, #{baseInterest,jdbcType=DECIMAL}, #{sms,jdbcType=TINYINT}, 
+      #{remark,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{cycle,jdbcType=TINYINT}, #{charge,jdbcType=DECIMAL}, 
+      #{notifyTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItems">
+        insert into bill_items
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="billId != null">
+                bill_id,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="money != null">
+                money,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="userId != null">
+                user_id,
+            </if>
+            <if test="payStatus != null">
+                pay_status,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="deadline != null">
+                deadline,
+            </if>
+            <if test="payTime != null">
+                pay_time,
+            </if>
+            <if test="order != null">
+                `order`,
+            </if>
+            <if test="billType != null">
+                bill_type,
+            </if>
+            <if test="overdueFine != null">
+                overdue_fine,
+            </if>
+            <if test="overdue != null">
+                overdue,
+            </if>
+            <if test="paid != null">
+                paid,
+            </if>
+            <if test="discount != null">
+                discount,
+            </if>
+            <if test="capital != null">
+                capital,
+            </if>
+            <if test="interest != null">
+                interest,
+            </if>
+            <if test="baseCapital != null">
+                base_capital,
+            </if>
+            <if test="baseInterest != null">
+                base_interest,
+            </if>
+            <if test="sms != null">
+                sms,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="deletedAt != null">
+                deleted_at,
+            </if>
+            <if test="cycle != null">
+                cycle,
+            </if>
+            <if test="charge != null">
+                charge,
+            </if>
+            <if test="notifyTime != null">
+                notify_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="billId != null">
+                #{billId,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="money != null">
+                #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="payStatus != null">
+                #{payStatus,jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="deadline != null">
+                #{deadline,jdbcType=DATE},
+            </if>
+            <if test="payTime != null">
+                #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order != null">
+                #{`order`,jdbcType=TINYINT},
+            </if>
+            <if test="billType != null">
+                #{billType,jdbcType=TINYINT},
+            </if>
+            <if test="overdueFine != null">
+                #{overdueFine,jdbcType=DECIMAL},
+            </if>
+            <if test="overdue != null">
+                #{overdue,jdbcType=INTEGER},
+            </if>
+            <if test="paid != null">
+                #{paid,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="capital != null">
+                #{capital,jdbcType=DECIMAL},
+            </if>
+            <if test="interest != null">
+                #{interest,jdbcType=DECIMAL},
+            </if>
+            <if test="baseCapital != null">
+                #{baseCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="baseInterest != null">
+                #{baseInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="sms != null">
+                #{sms,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedAt != null">
+                #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cycle != null">
+                #{cycle,jdbcType=TINYINT},
+            </if>
+            <if test="charge != null">
+                #{charge,jdbcType=DECIMAL},
+            </if>
+            <if test="notifyTime != null">
+                #{notifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItemsExample"
+            resultType="java.lang.Integer">
+        select count(*) from bill_items
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update bill_items
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.billId != null">
+                bill_id = #{record.billId,jdbcType=INTEGER},
+            </if>
+            <if test="record.amount != null">
+                amount = #{record.amount,jdbcType=DECIMAL},
+            </if>
+            <if test="record.money != null">
+                money = #{record.money,jdbcType=DECIMAL},
+            </if>
+            <if test="record.orderId != null">
+                order_id = #{record.orderId,jdbcType=INTEGER},
+            </if>
+            <if test="record.userId != null">
+                user_id = #{record.userId,jdbcType=INTEGER},
+            </if>
+            <if test="record.payStatus != null">
+                pay_status = #{record.payStatus,jdbcType=TINYINT},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+            <if test="record.deadline != null">
+                deadline = #{record.deadline,jdbcType=DATE},
+            </if>
+            <if test="record.payTime != null">
+                pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.order != null">
+                `order` = #{record.order,jdbcType=TINYINT},
+            </if>
+            <if test="record.billType != null">
+                bill_type = #{record.billType,jdbcType=TINYINT},
+            </if>
+            <if test="record.overdueFine != null">
+                overdue_fine = #{record.overdueFine,jdbcType=DECIMAL},
+            </if>
+            <if test="record.overdue != null">
+                overdue = #{record.overdue,jdbcType=INTEGER},
+            </if>
+            <if test="record.paid != null">
+                paid = #{record.paid,jdbcType=DECIMAL},
+            </if>
+            <if test="record.discount != null">
+                discount = #{record.discount,jdbcType=DECIMAL},
+            </if>
+            <if test="record.capital != null">
+                capital = #{record.capital,jdbcType=DECIMAL},
+            </if>
+            <if test="record.interest != null">
+                interest = #{record.interest,jdbcType=DECIMAL},
+            </if>
+            <if test="record.baseCapital != null">
+                base_capital = #{record.baseCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="record.baseInterest != null">
+                base_interest = #{record.baseInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="record.sms != null">
+                sms = #{record.sms,jdbcType=TINYINT},
+            </if>
+            <if test="record.remark != null">
+                remark = #{record.remark,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdAt != null">
+                created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedAt != null">
+                updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.deletedAt != null">
+                deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.cycle != null">
+                cycle = #{record.cycle,jdbcType=TINYINT},
+            </if>
+            <if test="record.charge != null">
+                charge = #{record.charge,jdbcType=DECIMAL},
+            </if>
+            <if test="record.notifyTime != null">
+                notify_time = #{record.notifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update bill_items
+        set id = #{record.id,jdbcType=INTEGER},
+        bill_id = #{record.billId,jdbcType=INTEGER},
+        amount = #{record.amount,jdbcType=DECIMAL},
+        money = #{record.money,jdbcType=DECIMAL},
+        order_id = #{record.orderId,jdbcType=INTEGER},
+        user_id = #{record.userId,jdbcType=INTEGER},
+        pay_status = #{record.payStatus,jdbcType=TINYINT},
+        status = #{record.status,jdbcType=TINYINT},
+        deadline = #{record.deadline,jdbcType=DATE},
+        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+        `order` = #{record.order,jdbcType=TINYINT},
+        bill_type = #{record.billType,jdbcType=TINYINT},
+        overdue_fine = #{record.overdueFine,jdbcType=DECIMAL},
+        overdue = #{record.overdue,jdbcType=INTEGER},
+        paid = #{record.paid,jdbcType=DECIMAL},
+        discount = #{record.discount,jdbcType=DECIMAL},
+        capital = #{record.capital,jdbcType=DECIMAL},
+        interest = #{record.interest,jdbcType=DECIMAL},
+        base_capital = #{record.baseCapital,jdbcType=DECIMAL},
+        base_interest = #{record.baseInterest,jdbcType=DECIMAL},
+        sms = #{record.sms,jdbcType=TINYINT},
+        remark = #{record.remark,jdbcType=VARCHAR},
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+        cycle = #{record.cycle,jdbcType=TINYINT},
+        charge = #{record.charge,jdbcType=DECIMAL},
+        notify_time = #{record.notifyTime,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItems">
+        update bill_items
+        <set>
+            <if test="billId != null">
+                bill_id = #{billId,jdbcType=INTEGER},
+            </if>
+            <if test="amount != null">
+                amount = #{amount,jdbcType=DECIMAL},
+            </if>
+            <if test="money != null">
+                money = #{money,jdbcType=DECIMAL},
+            </if>
+            <if test="orderId != null">
+                order_id = #{orderId,jdbcType=INTEGER},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="payStatus != null">
+                pay_status = #{payStatus,jdbcType=TINYINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="deadline != null">
+                deadline = #{deadline,jdbcType=DATE},
+            </if>
+            <if test="payTime != null">
+                pay_time = #{payTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="order != null">
+                `order` = #{order,jdbcType=TINYINT},
+            </if>
+            <if test="billType != null">
+                bill_type = #{billType,jdbcType=TINYINT},
+            </if>
+            <if test="overdueFine != null">
+                overdue_fine = #{overdueFine,jdbcType=DECIMAL},
+            </if>
+            <if test="overdue != null">
+                overdue = #{overdue,jdbcType=INTEGER},
+            </if>
+            <if test="paid != null">
+                paid = #{paid,jdbcType=DECIMAL},
+            </if>
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DECIMAL},
+            </if>
+            <if test="capital != null">
+                capital = #{capital,jdbcType=DECIMAL},
+            </if>
+            <if test="interest != null">
+                interest = #{interest,jdbcType=DECIMAL},
+            </if>
+            <if test="baseCapital != null">
+                base_capital = #{baseCapital,jdbcType=DECIMAL},
+            </if>
+            <if test="baseInterest != null">
+                base_interest = #{baseInterest,jdbcType=DECIMAL},
+            </if>
+            <if test="sms != null">
+                sms = #{sms,jdbcType=TINYINT},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="deletedAt != null">
+                deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="cycle != null">
+                cycle = #{cycle,jdbcType=TINYINT},
+            </if>
+            <if test="charge != null">
+                charge = #{charge,jdbcType=DECIMAL},
+            </if>
+            <if test="notifyTime != null">
+                notify_time = #{notifyTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItems">
+    update bill_items
+    set bill_id = #{billId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DECIMAL},
+      money = #{money,jdbcType=DECIMAL},
+      order_id = #{orderId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      pay_status = #{payStatus,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      deadline = #{deadline,jdbcType=DATE},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      `order` = #{order,jdbcType=TINYINT},
+      bill_type = #{billType,jdbcType=TINYINT},
+      overdue_fine = #{overdueFine,jdbcType=DECIMAL},
+      overdue = #{overdue,jdbcType=INTEGER},
+      paid = #{paid,jdbcType=DECIMAL},
+      discount = #{discount,jdbcType=DECIMAL},
+      capital = #{capital,jdbcType=DECIMAL},
+      interest = #{interest,jdbcType=DECIMAL},
+      base_capital = #{baseCapital,jdbcType=DECIMAL},
+      base_interest = #{baseInterest,jdbcType=DECIMAL},
+      sms = #{sms,jdbcType=TINYINT},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      cycle = #{cycle,jdbcType=TINYINT},
+      charge = #{charge,jdbcType=DECIMAL},
+      notify_time = #{notifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+    <select id="queryOrdersAndbill_items" resultMap="BaseResultMap"
+            parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItemsExample">
+        select
+        <include refid="Column_List"/>
+        from orders o
+        LEFT JOIN bill_items b
+        ON
+        o.id = b.order_id
+        LEFT JOIN
+        bill_item_paid_flows bf
+        ON
+        b.id = bf.bill_item_id
+        WHERE bf.pay_time >=#{beginDate,jdbcType=TIMESTAMP}
+        and bf.pay_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+        and b.pay_status =#{payStatus,jdbcType=TINYINT}
+        and b.status =#{status,jdbcType=TINYINT}
+        and o.loan_area = #{loanArea,jdbcType=TINYINT}
+        limit #{startLimit,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+    </select>
+
+    <select id="countByOrdersAndbill_items" parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItemsExample"
+            resultType="java.lang.Integer">
+        select
+        count(1)
+        from orders o
+        LEFT JOIN bill_items b
+        ON
+        o.id = b.order_id
+        LEFT JOIN
+        bill_item_paid_flows bf
+        ON
+        b.id = bf.bill_item_id
+        WHERE bf.pay_time >=#{beginDate,jdbcType=TIMESTAMP}
+        and bf.pay_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+        and b.pay_status =#{payStatus,jdbcType=TINYINT}
+        and b.status =#{status,jdbcType=TINYINT}
+        and o.loan_area = #{loanArea,jdbcType=TINYINT}
+    </select>
+
+    <select id="selectByBillidList" resultMap="BaseResultMap"
+            parameterType="com.qudian.pay.ares.dao.entity.laifenqi.BillItemsExample">
+        select
+        <include refid="Column_List"/>
+        from
+        bill_items b
+
+        LEFT JOIN
+        bill_item_paid_flows bf
+        ON
+        b.id = bf.bill_item_id
+        WHERE bf.pay_time >=#{beginDate,jdbcType=TIMESTAMP}
+        and bf.STATUS = 1
+        and bf.pay_time &lt;= #{endDate,jdbcType=TIMESTAMP}
+        and b.pay_status =2
+        and b.status =1
+        and b.id in
+        <foreach item="item" index="index" collection="items" open="("
+                 separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

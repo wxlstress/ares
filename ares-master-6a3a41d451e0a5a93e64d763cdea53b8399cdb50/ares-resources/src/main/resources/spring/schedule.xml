@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       default-autowire="byName"
+       xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+		http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--  定时任务 列表  st-->
+    <bean id="zhaizhuanTask" class="com.qudian.pay.ares.service.AresSchedule">
+        <property name="loanArea" value="0"/>
+    </bean>
+
+    <bean id="gzwjs" class="com.qudian.pay.ares.service.AresSchedule">
+        <property name="loanArea" value="29"/>
+    </bean>
+
+    <bean id="fzwjs" class="com.qudian.pay.ares.service.AresSchedule">
+        <property name="loanArea" value="49"/>
+    </bean>
+    <!--  定时任务 列表  ed-->
+
+    <!--  定时任务执行时间 st-->
+    <task:scheduled-tasks>
+        <!--债权转让6.3亿-订单id -定时任务- -->
+        <task:scheduled ref="zhaizhuanTask" method="currencyBondTransfer" cron="0 0 9 * * ?"/>
+
+        <!--赣州网金社定时任务-->
+        <task:scheduled ref="gzwjs" method="currencyBondTransfer" cron="0 20 9 * * ?"/>
+
+        <!--抚州网金社定时任务-->
+        <task:scheduled ref="fzwjs" method="currencyBondTransfer" cron="0 40 9 * * ?"/>
+    </task:scheduled-tasks>
+    <!--  定时任务执行时间 ed-->
+
+</beans>

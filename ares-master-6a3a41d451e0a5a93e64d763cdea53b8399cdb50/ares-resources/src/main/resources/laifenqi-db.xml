@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+
+    <bean id="laifenqiDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.gjt.mm.mysql.Driver"/>
+        <property name="url" value="${laifenqiUrl}"/>
+        <property name="username" value="${laifenqiusername}"/>
+        <property name="password" value="${laifenqipassword}"/>
+
+        <property name="validationQuery" value="SELECT 1"/>
+        <property name="testOnBorrow" value="true"/>
+        <property name="initialSize">
+            <value>5</value>
+        </property>
+        <property name="maxActive">
+            <value>20</value>
+        </property>
+        <property name="maxWait">
+            <value>60000</value>
+        </property>
+        <property name="maxIdle">
+            <value>20</value>
+        </property>
+        <property name="minIdle">
+            <value>3</value>
+        </property>
+        <property name="removeAbandoned">
+            <value>true</value>
+        </property>
+        <property name="removeAbandonedTimeout">
+            <value>180</value>
+        </property>
+    </bean>
+
+    <!-- 使用SqlSessionFactoryBean工厂产生SqlSession对象，方便后期注入Dao -->
+    <bean id="laifenqiSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="laifenqiDataSource"/>
+        <property name="mapperLocations" value="classpath:/mybatis/laifenqi/.*"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="laifenqiSqlSessionFactory"/>
+        <property name="basePackage" value="com.qudian.pay.ares.dao.mapper.laifenqi"/>
+    </bean>
+
+</beans>

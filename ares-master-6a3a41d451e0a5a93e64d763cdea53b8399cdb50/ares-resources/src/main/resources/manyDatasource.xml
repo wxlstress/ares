@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xmlns:cache="http://www.springframework.org/schema/cache" xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+       http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+    <context:property-placeholder location="classpath:config/app.properties"/>
+
+
+    <bean id="abstractXADataSource" class="com.atomikos.jdbc.AtomikosDataSourceBean" init-method="init"
+          destroy-method="close" abstract="true">
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <!-- <property name="poolSize" value="40" /> -->
+        <property name="minPoolSize" value="30"/>
+        <property name="maxPoolSize" value="60"/>
+        <property name="borrowConnectionTimeout" value="60"/>
+        <property name="reapTimeout" value="1000"/>
+        <!-- 最大空闲时间 -->
+        <property name="maxIdleTime" value="60"/>
+        <property name="maintenanceInterval" value="60"/>
+        <property name="loginTimeout" value="60"/>
+        <property name="testQuery">
+            <value>select 1</value>
+        </property>
+    </bean>
+
+    <!-- 本地数据源配置 开始-->
+    <bean id="localdataSource" parent="abstractXADataSource">
+        <!-- value只要两个数据源不同就行，随便取名 -->
+        <property name="uniqueResourceName" value="mysql/local"/>
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="URL">${mysql.jdbc.url}</prop>
+                <prop key="user">${mysql.jdbc.username}</prop>
+                <prop key="password">${mysql.jdbc.password}</prop>
+                <prop key="pinGlobalTxToPhysicalConnection">true</prop>
+            </props>
+        </property>
+    </bean>
+    <!--本地数据源配置 结束-->
+
+    <!-- 外部数据源1  趣分期数据源 配置 开始-->
+    <bean id="qufenqidataSource" parent="abstractXADataSource">
+        <!-- value只要两个数据源不同就行，随便取名 -->
+        <property name="uniqueResourceName" value="mysql/qufenqi"/>
+        <property name="xaDataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <property name="xaProperties">
+            <props>
+                <prop key="URL">${laifenqiUrl}</prop>
+                <prop key="user">${laifenqiusername}</prop>
+                <prop key="password">${laifenqipassword}</prop>
+                <prop key="pinGlobalTxToPhysicalConnection">true</prop>
+            </props>
+        </property>
+    </bean>
+    <!-- 外部数据源1 趣分期数据源 配置 结束-->
+
+
+    <bean id="qufenqisqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="qufenqidataSource"/>
+        <property name="mapperLocations" value="classpath*:mybatis/laifenqi/*.xml"/>
+    </bean>
+
+    <bean id="localsqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="localdataSource"/>
+        <property name="mapperLocations" value="classpath*:mybatis/local/*.xml"/>
+    </bean>
+
+    <bean id="atomikosTransactionManager" class="com.atomikos.icatch.jta.UserTransactionManager"
+          init-method="init" destroy-method="close">
+        <property name="forceShutdown">
+            <value>true</value>
+        </property>
+    </bean>
+    <bean id="atomikosUserTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+        <property name="transactionTimeout" value="300"/>
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.transaction.jta.JtaTransactionManager">
+        <property name="transactionManager">
+            <ref bean="atomikosTransactionManager"/>
+        </property>
+        <property name="userTransaction">
+            <ref bean="atomikosUserTransaction"/>
+        </property>
+        <!-- 必须设置，否则程序出现异常 JtaTransactionManager does not support custom isolation levels by default -->
+        <property name="allowCustomIsolationLevels" value="true"/>
+    </bean>
+
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qudian.pay.ares.dao.mapper.local"/>
+        <property name="sqlSessionFactoryBeanName" value="localsqlSessionFactory"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.qudian.pay.ares.dao.mapper.laifenqi"/>
+        <property name="sqlSessionFactoryBeanName" value="qufenqisqlSessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"></tx:annotation-driven>
+</beans>

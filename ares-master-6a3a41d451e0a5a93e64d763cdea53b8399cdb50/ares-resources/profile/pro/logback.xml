@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+
+	<!-- 日志文件路径 -->
+	<property name="LOG_DIR" value="/data/logs/tomcat-pay.ares-1/develop" />
+
+	<!-- 业务日志appender -->
+	<appender name="common-biz" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/common-biz.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/common-biz.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d %-5p %c - %m%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<!-- dao日志appender -->
+	<appender name="common-dao" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/common-dao.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/common-dao.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d  %p %c - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- 异常日志appender -->
+	<appender name="common-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/common-error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/common-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d  %-5p %c - %m%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+	</appender>
+
+	<!-- 默认日志appender -->
+	<appender name="default" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/common-default.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/common-default.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d  %-5p %c - %m%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- 业务日志 -->
+	<logger name="com.qudian.pay.ares" level="INFO" additivity="false">
+		<appender-ref ref="common-biz" />
+		<appender-ref ref="common-error" />
+	</logger>
+
+	<!-- dao日志 -->
+	<logger name="com.qudian.pay.ares.dao" level="DEBUG" additivity="false">
+		<appender-ref ref="common-dao" />
+		<appender-ref ref="common-error" />
+	</logger>
+
+	<!-- 默认输出日志 -->
+	<root level="INFO">
+		<appender-ref ref="default" />
+		<appender-ref ref="common-error" />
+	</root>
+</configuration>

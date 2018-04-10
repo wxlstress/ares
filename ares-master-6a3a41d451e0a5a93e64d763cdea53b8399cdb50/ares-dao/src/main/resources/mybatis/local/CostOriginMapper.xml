@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qudian.pay.ares.dao.mapper.local.CostOriginMapper" >
+  <resultMap id="BaseResultMap" type="com.qudian.pay.ares.dao.entity.local.CostOrigin" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="loan_company" property="loanCompany" jdbcType="INTEGER" />
+    <result column="business_company" property="businessCompany" jdbcType="INTEGER" />
+    <result column="origin" property="origin" jdbcType="VARCHAR" />
+    <result column="nature_of_funds_iD" property="natureOfFundsId" jdbcType="INTEGER" />
+    <result column="nature_of_funds" property="natureOfFunds" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="DATE" />
+    <result column="update_time" property="updateTime" jdbcType="DATE" />
+    <result column="opt_user" property="optUser" jdbcType="VARCHAR" />
+    <result column="ext_1" property="ext1" jdbcType="VARCHAR" />
+    <result column="ext_2" property="ext2" jdbcType="VARCHAR" />
+    <result column="ext_3" property="ext3" jdbcType="VARCHAR" />
+    <result column="ext_4" property="ext4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, loan_company, business_company, origin, nature_of_funds_iD, nature_of_funds, 
+    create_time, update_time, opt_user, ext_1, ext_2, ext_3, ext_4
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.qudian.pay.ares.dao.entity.local.CostOriginExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cost_origin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cost_origin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cost_origin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.qudian.pay.ares.dao.entity.local.CostOriginExample" >
+    delete from cost_origin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.qudian.pay.ares.dao.entity.local.CostOrigin" >
+    insert into cost_origin (loan_company, business_company,
+      origin, nature_of_funds_id, nature_of_funds,
+      create_time, opt_user,
+      ext_1, ext_2, ext_3, ext_4
+      )
+    values (#{loanCompany,jdbcType=INTEGER}, #{businessCompany,jdbcType=INTEGER},
+      #{origin,jdbcType=VARCHAR}, #{natureOfFundsId,jdbcType=INTEGER}, #{natureOfFunds,jdbcType=VARCHAR}, 
+      now(), #{optUser,jdbcType=VARCHAR},
+      #{ext1,jdbcType=VARCHAR}, #{ext2,jdbcType=VARCHAR}, #{ext3,jdbcType=VARCHAR}, #{ext4,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.qudian.pay.ares.dao.entity.local.CostOrigin" >
+    insert into cost_origin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="loanCompany != null" >
+        loan_company,
+      </if>
+      <if test="businessCompany != null" >
+        business_company,
+      </if>
+      <if test="origin != null" >
+        origin,
+      </if>
+      <if test="natureOfFundsId != null" >
+        nature_of_funds_iD,
+      </if>
+      <if test="natureOfFunds != null" >
+        nature_of_funds,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="optUser != null" >
+        opt_user,
+      </if>
+      <if test="ext1 != null" >
+        ext_1,
+      </if>
+      <if test="ext2 != null" >
+        ext_2,
+      </if>
+      <if test="ext3 != null" >
+        ext_3,
+      </if>
+      <if test="ext4 != null" >
+        ext_4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loanCompany != null" >
+        #{loanCompany,jdbcType=INTEGER},
+      </if>
+      <if test="businessCompany != null" >
+        #{businessCompany,jdbcType=INTEGER},
+      </if>
+      <if test="origin != null" >
+        #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="natureOfFundsId != null" >
+        #{natureOfFundsId,jdbcType=INTEGER},
+      </if>
+      <if test="natureOfFunds != null" >
+        #{natureOfFunds,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="optUser != null" >
+        #{optUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        #{ext4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.qudian.pay.ares.dao.entity.local.CostOriginExample" resultType="java.lang.Integer" >
+    select count(*) from cost_origin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update cost_origin
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.loanCompany != null" >
+        loan_company = #{record.loanCompany,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessCompany != null" >
+        business_company = #{record.businessCompany,jdbcType=INTEGER},
+      </if>
+      <if test="record.origin != null" >
+        origin = #{record.origin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.natureOfFundsId != null" >
+        nature_of_funds_iD = #{record.natureOfFundsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.natureOfFunds != null" >
+        nature_of_funds = #{record.natureOfFunds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=DATE},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=DATE},
+      </if>
+      <if test="record.optUser != null" >
+        opt_user = #{record.optUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext1 != null" >
+        ext_1 = #{record.ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext2 != null" >
+        ext_2 = #{record.ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext3 != null" >
+        ext_3 = #{record.ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ext4 != null" >
+        ext_4 = #{record.ext4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update cost_origin
+    set id = #{record.id,jdbcType=INTEGER},
+      loan_company = #{record.loanCompany,jdbcType=INTEGER},
+      business_company = #{record.businessCompany,jdbcType=INTEGER},
+      origin = #{record.origin,jdbcType=VARCHAR},
+      nature_of_funds_iD = #{record.natureOfFundsId,jdbcType=INTEGER},
+      nature_of_funds = #{record.natureOfFunds,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=DATE},
+      update_time = #{record.updateTime,jdbcType=DATE},
+      opt_user = #{record.optUser,jdbcType=VARCHAR},
+      ext_1 = #{record.ext1,jdbcType=VARCHAR},
+      ext_2 = #{record.ext2,jdbcType=VARCHAR},
+      ext_3 = #{record.ext3,jdbcType=VARCHAR},
+      ext_4 = #{record.ext4,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.qudian.pay.ares.dao.entity.local.CostOrigin" >
+    update cost_origin
+    <set >
+      <if test="loanCompany != null" >
+        loan_company = #{loanCompany,jdbcType=INTEGER},
+      </if>
+      <if test="businessCompany != null" >
+        business_company = #{businessCompany,jdbcType=INTEGER},
+      </if>
+      <if test="origin != null" >
+        origin = #{origin,jdbcType=VARCHAR},
+      </if>
+      <if test="natureOfFundsId != null" >
+        nature_of_funds_iD = #{natureOfFundsId,jdbcType=INTEGER},
+      </if>
+      <if test="natureOfFunds != null" >
+        nature_of_funds = #{natureOfFunds,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="optUser != null" >
+        opt_user = #{optUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ext1 != null" >
+        ext_1 = #{ext1,jdbcType=VARCHAR},
+      </if>
+      <if test="ext2 != null" >
+        ext_2 = #{ext2,jdbcType=VARCHAR},
+      </if>
+      <if test="ext3 != null" >
+        ext_3 = #{ext3,jdbcType=VARCHAR},
+      </if>
+      <if test="ext4 != null" >
+        ext_4 = #{ext4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.qudian.pay.ares.dao.entity.local.CostOrigin" >
+    update cost_origin
+    set loan_company = #{loanCompany,jdbcType=INTEGER},
+      business_company = #{businessCompany,jdbcType=INTEGER},
+      origin = #{origin,jdbcType=VARCHAR},
+      nature_of_funds_iD = #{natureOfFundsId,jdbcType=INTEGER},
+      nature_of_funds = #{natureOfFunds,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=DATE},
+      update_time = #{updateTime,jdbcType=DATE},
+      opt_user = #{optUser,jdbcType=VARCHAR},
+      ext_1 = #{ext1,jdbcType=VARCHAR},
+      ext_2 = #{ext2,jdbcType=VARCHAR},
+      ext_3 = #{ext3,jdbcType=VARCHAR},
+      ext_4 = #{ext4,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByExampleByPage" resultMap="BaseResultMap"
+          parameterType="com.qudian.pay.ares.dao.entity.local.CostOriginExample">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List"/>
+    from cost_origin
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause"/>
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startLimit != null">
+      limit ${startLimit},${pageSize}
+    </if>
+  </select>
+
+</mapper>
